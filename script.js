@@ -25,8 +25,8 @@ const operate = function(operator, a, b) {
     } else if (operator == '/') {
         result = divideOperation(Number(a), Number(b));
     };
-    if (String(result).length > 20) {
-        return Number(result.toFixed(20));
+    if (String(result).length > 8) {
+        return Number(result.toFixed(8));
     } else {
         return result;
     };
