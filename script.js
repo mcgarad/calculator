@@ -134,8 +134,66 @@ deleteButton.addEventListener('click', () => {
 const decimalButton = document.querySelector("#decimal");
 
 decimalButton.addEventListener('click', () => {
+    if (readyForNewInput) {
+        displayValue = "0";
+        readyForNewInput = false;
+    };
     if (!displayValue.includes('.')) {
         displayValue = displayValue + '.';
         displayWindow.textContent = displayValue;
     }
+});
+
+window.addEventListener('keydown', (event) => {
+    if (event.key === '.') {
+        if (readyForNewInput) {
+            displayValue = "0";
+            readyForNewInput = false;
+        };
+        if (!displayValue.includes('.')) {
+            displayValue = displayValue + '.';
+            displayWindow.textContent = displayValue;
+        };
+    } else if (event.key === 'Backspace') {
+        if (typedDigit && displayValue.length > 1) {
+            displayValue = displayValue.substring(0, displayValue.length - 1);
+            numberTyped = displayValue;
+            displayWindow.textContent = displayValue;
+        } else if (typedDigit && displayValue != "0") {
+            displayValue = "0";
+            numberTyped = displayValue;
+            displayWindow.textContent = displayValue;
+            typedDigit = false;
+        };
+    } else if (event.key === 'Enter' || event.key === '=') {
+        if (operationPressed) {
+            displayValue = checkInfinity(operate(operator, previousDisplay, numberTyped));
+            typedDigit = false;
+        };
+        previousDisplay =  displayValue;
+        operationPressed = true;
+        readyForNewInput = true;
+        equalsButtonPressed = true;
+    } else if (event.key === '-' || event.key === '/' || event.key === '*' || event.key === '+') {
+        if (equalsButtonPressed) {
+            operationPressed = false;
+            equalsButtonPressed = false;
+        }
+        if (operationPressed) {
+            displayValue = checkInfinity(operate(operator, previousDisplay, numberTyped));
+            typedDigit = false;
+        };
+        previousDisplay =  displayValue;
+        operator = event.key;
+        operationPressed = true;
+        readyForNewInput = true;
+    } else if (event.key === '0' || event.key === '1' ||
+               event.key === '2' || event.key === '3' ||
+               event.key === '4' || event.key === '5' ||
+               event.key === '6' || event.key === '7' ||
+               event.key === '8' || event.key === '9') {
+        displayValue = displayAddDigit(displayValue, event.key);
+        typedDigit = true;
+        numberTyped = displayValue;
+        };
 });
