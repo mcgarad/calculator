@@ -14,15 +14,21 @@ const divideOperation = function(a, b) {
     return a / b;
 };
 
+let result = 0;
 const operate = function(operator, a, b) {
     if (operator == '+') {
-        return addOperation(Number(a), Number(b));
+        result = addOperation(Number(a), Number(b));
     } else if (operator == '-') {
-        return subtractOperation(Number(a), Number(b));
+        result = subtractOperation(Number(a), Number(b));
     } else if (operator == '*') {
-        return multiplyOperation(Number(a), Number(b));
+        result = multiplyOperation(Number(a), Number(b));
     } else if (operator == '/') {
-        return divideOperation(Number(a), Number(b));
+        result = divideOperation(Number(a), Number(b));
+    };
+    if (String(result).length > 20) {
+        return Number(result.toFixed(20));
+    } else {
+        return result;
     };
 };
 
