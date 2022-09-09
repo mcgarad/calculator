@@ -50,6 +50,8 @@ const displayAddDigit = function(displayValue, input) {
         displayWindow.textContent = displayValue;
         readyForNewInput = false;
         return displayValue;
+    } else if (displayValue.length > 8) {
+        return displayValue;
     } else {
         displayValue = displayValue + input;
         displayWindow.textContent = displayValue;
@@ -78,6 +80,7 @@ digitButtons.forEach((button) => {
 });
 
 const clearButton = document.querySelector('#clear');
+
 clearButton.addEventListener('click', () => {
     displayValue = '0';
     displayWindow.textContent = displayValue;
